@@ -1,0 +1,221 @@
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgb(245, 245, 245);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgb(180, 180, 180);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(165, 165, 165);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: rgb(150, 150, 150);
+}
+
+body {
+  background-color: rgb(230, 215, 255);
+  margin: 0%;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+}
+
+td {
+  padding: 5px;
+  min-width: 20px;
+  min-height: 20px;
+}
+
+input {
+  width: 40px;
+}
+
+div {
+  position: relative;
+  box-sizing: border-box;
+}
+
+label, span {
+    white-space: pre-wrap;
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.bottomBorder {
+  border-bottom: 1px solid rgb(120, 120, 120);
+}
+
+.button {
+  cursor: pointer;
+  background-color: rgb(230, 230, 250);
+}
+
+#main {
+  width: 80%;
+  margin: auto;
+  top: 0%;
+  background-color: #ffffff;
+  min-height: 100%;
+}
+
+#topSection {
+  border-bottom: 2px solid black;
+  padding: 25px;
+}
+
+#leftSection {
+  min-width: 25%;
+  width: 25%;
+  font-size: 115%;
+  border-right: 1px solid black;
+}
+
+#rightSection {
+  position: relative;
+  font-size: 130%;
+  left: 25%;
+  width: 75%;
+  text-align: center;
+}
+
+#matrixTableSection {
+  height: 100%;
+}
+
+#rrefMessage {
+  display: none;
+  max-height: 20px;
+  font-size: 90%;
+}
+
+#bottomSection {
+  display: none;
+  min-height: 450px;
+}
+
+#matrixInput{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: rgb(245, 245, 245);
+}
+
+#matrixInput td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+#setMatrixButton {
+  border: 1px solid black;
+  width: 110px;
+  text-align: center;
+  font-size: 85%;
+}
+
+#matrixTable {
+  position: relative;
+  font-size: 120%;
+  background-color: #ffffff;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+}
+
+#rowOperationsContainer {
+  position: absolute;
+  width: 40%;
+  height: 35%;
+  left: 15%;
+  top: 5%;
+}
+
+#rowOperationsTable {
+  border: 1px solid black;
+  width: 100%;
+  height: 100%;
+  border-spacing: 0;
+}
+
+#rowOperationsTable td {
+  min-height: 40px;
+}
+
+.executeButton {
+  width: 22%;
+  border-left: 1px solid rgb(200, 200, 200);
+}
+
+#rowOpTableHeader {
+  background-color: rgb(240, 240, 240);
+  font-size: 112%;
+  height: 45px;
+}
+
+#operationsLogContainer {
+  font-size: 110%;
+  position: absolute;
+  width: 25%;
+  left: 70%;
+  top: 5%;
+  height: 90%;
+}
+
+#operationsLogTable {
+  border: 1px solid black;
+  border-spacing: 0;
+  width: 100%;
+  height: 100%;
+  table-layout: fixed;
+}
+
+
+#operationsLogHeader {
+  background-color: rgb(240, 240, 240);
+  padding: 12px;
+  height: 45px;
+}
+
+#operationsLogTD {
+  height: 100%;
+  max-height: 100%;
+}
+
+#operationsLog {
+  padding-left: 15px;
+  padding-top: 5px;
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
+}
+
+#calculatorContainer {
+  position: absolute;
+  border: 1px solid black;
+  top: 45%;
+  left: 5%;
+  width: 60%;
+  height: 50%;
+}
+
+#calculator {
+  width: 100%;
+  height: 100%;
+}
+
+#calculatorHeader {
+  background-color: rgb(240, 240, 240);
+  font-size: 112%;
+  height: 45px;
+}
+
+#x {
+  font-size: 83%;
+}
