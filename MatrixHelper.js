@@ -1,6 +1,7 @@
-var a = new Matrix();
-var arr = [];
+var arr = [[0]];
+var a = new Matrix(arr);
 var m, n;
+var initCalcHeight = calculatorContainer.offsetHeight;
 
 function buildInputTable()
 {
@@ -11,7 +12,6 @@ function buildInputTable()
     {
       var td = document.createElement("TD");
       var input = document.createElement("INPUT");
-      // TODO: set input class name to something i'll style later
       input.id = "i" + r + "" + c;
 
       td.appendChild(input);
@@ -70,7 +70,7 @@ function createMatrix()
 {
   //TODO: check to make sure inputs are valid
 
-  bottomSection.style.display = "block";
+  matrixTable.style.borderColor = "black";
 
   arr= [];
   for (var r = 0; r < m; r++)
@@ -82,55 +82,59 @@ function createMatrix()
     }
   }
   a.setMatrix(arr);
-  displayMatrix();
+  displayMatrix(matrixTable, a);
   stylePage();
-
 }
 
 function stylePage()
 {
   leftSection.style.width = (matrixInput.offsetWidth + 25) + "px";
+  leftSection.style.height = Math.max((matrixInput.offsetHeight + inputSizeSection.offsetHeight + 50), matrixTable.offsetHeight) + "px";
   rightSection.style.width = (topSection.offsetWidth - leftSection.offsetWidth - 50) + "px";
   rightSection.style.left = leftSection.offsetWidth + "px";
   rightSection.style.height = leftSection.offsetHeight + "px";
   rightSection.style.bottom = leftSection.offsetHeight + "px";
 
   topSection.style.height = (leftSection.offsetHeight + 65) + "px";
-  bottomSection.style.height = main.offsetHeight - topSection.offsetHeight;
+
+  resizeCalc();
+  styleMatrixBorder(matrixTable, matrixBorder);
+  styleMatrixBorder(calcMatrixTable, calcMatrixBorder);
 }
 
-function displayMatrix()
+function styleMatrixBorder(table, border)
 {
+  border.style.width = (table.offsetWidth - 30) + "px";
+  border.style.left = (table.offsetLeft + 15) + "px";
+  border.style.height = (table.offsetHeight + 1) + "px";
+}
 
-  for (var i = matrixTable.childNodes.length - 1; i >= 0 ; i--)
-    matrixTable.removeChild(matrixTable.childNodes[i])
+function displayMatrix(table, matrix)
+{
+  for (var i = table.childNodes.length - 1; i >= 0 ; i--)
+    table.removeChild(table.childNodes[i])
 
-  for (var r = 0; r < a.m; r++)
+  for (var r = 0; r < matrix.m; r++)
   {
     var tr = document.createElement("TR");
-    for (var c = 0; c < a.n; c++)
+    for (var c = 0; c < matrix.n; c++)
     {
       var td = document.createElement("TD");
-      td.id = "a" + r + "" + c;
-
-      td.innerHTML = formatFraction(a.matrix[r][c]);
+      td.innerHTML = formatFraction(matrix.matrix[r][c]);
 
       tr.appendChild(td);
     }
-    matrixTable.appendChild(tr);
+    table.appendChild(tr);
   }
+
   displayRREFMessage();
 }
 
 function updateMatrix()
 {
   for (var tr = 0; tr < matrixTable.childNodes.length; tr++)
-  {
     for (var td = 0; td < matrixTable.childNodes[tr].childNodes.length; td++)
-    {
       matrixTable.childNodes[tr].childNodes[td].innerHTML = formatFraction(a.matrix[tr][td]);
-    }
-  }
   displayRREFMessage();
 }
 
@@ -145,7 +149,6 @@ function displayRREFMessage()
   else if (a.isREF())
   {
     rrefMessage.style.display = "block";
-
     rrefMessage.style.color = "rgb(220, 200, 40)";
     rrefMessage.innerHTML = "Matrix is in row-echelon form!"
   }
@@ -168,6 +171,20 @@ function formatFraction(num)
   return rtn;
 }
 
+function addRowOp(eq)
+{
+  var op = document.createElement("P");
+  op.innerHTML = eq;
+  operationsLog.appendChild(op);
+}
+
+function resizeCalc()
+{
+  calculatorContainer.style.height = Math.max(calcMatrixTable.offsetHeight + 60, initCalcHeight) + "px";
+  main.style.height = (topSection.offsetHeight + calculatorContainer.offsetHeight * 2) + "px";
+  bottomSection.style.height = main.offsetHeight - topSection.offsetHeight;
+}
+
 interchangeButton.onclick = function()
 {
   var r1 = interchangeRow1Input.value;
@@ -178,9 +195,7 @@ interchangeButton.onclick = function()
   interchangeRow1Input.value = "";
   interchangeRow2Input.value = "";
 
-  var op = document.createElement("P");
-  op.innerHTML = "R" + r1 + " ↔ " + "R" + r2;
-  operationsLog.appendChild(op);
+  addRowOp("R" + r1 + " ↔ " + "R" + r2);
 }
 
 multiplyRowButton.onclick = function()
@@ -193,9 +208,7 @@ multiplyRowButton.onclick = function()
   multiplyRow1.value = "";
   mulitplyBy.value = "";
 
-  var op = document.createElement("P");
-  op.innerHTML = "R" + row + " = R" + row + " x " + formatFraction(scalar);
-  operationsLog.appendChild(op);
+  addRowOp("R" + row + " = R" + row + " x " + formatFraction(scalar));
 }
 
 addRowsButton.onclick = function()
@@ -210,15 +223,80 @@ addRowsButton.onclick = function()
   addRow1.value = "";
   addRow2.value = "";
 
-  var op = document.createElement("P");
-  op.innerHTML = "R" + r2 + " = R" + r2 + " + " + "(" + formatFraction(scalar) + ")R" + r1;
-  operationsLog.appendChild(op);
+  addRowOp("R" + r2 + " = R" + r2 + " + " + "(" + formatFraction(scalar) + ")R" + r1);
 }
 
-function clearOpLog()
+clearButton.onclick = function()
 {
   for (var i = operationsLog.childNodes.length - 1; i >= 0 ; i--)
     operationsLog.removeChild(operationsLog.childNodes[i])
+}
+
+detButton.onclick = function()
+{
+  calcMatrixBorder.style.display = "none";
+  calcMatrixTable.style.display = "none";
+  calculatorOutput.style.display = "block";
+  if (a.m == a.n)
+  {
+    calculatorOutput.innerHTML = formatFraction(a.det());
+  }
+  else
+  {
+    calculatorOutput.innerHTML = "Matrix is not square"
+  }
+}
+
+rrefButton.onclick = function()
+{
+  calcMatrixBorder.style.display = "block";
+  calcMatrixTable.style.display = "inline-block";
+  calculatorOutput.style.display = "none";
+  calcMatrixTable.style.borderColor = "black";
+
+  var rrefMatrix = a.calcRREF();
+
+  displayMatrix(calcMatrixTable, rrefMatrix);
+  styleMatrixBorder(calcMatrixTable, calcMatrixBorder);
+  resizeCalc();
+}
+
+transposeButton.onclick = function()
+{
+  calcMatrixBorder.style.display = "block";
+  calcMatrixTable.style.display = "inline-block";
+  calculatorOutput.style.display = "none";
+  calcMatrixTable.style.borderColor = "black";
+
+  var transposedMatrix = a.transpose();
+
+  displayMatrix(calcMatrixTable, transposedMatrix);
+  styleMatrixBorder(calcMatrixTable, calcMatrixBorder);
+  resizeCalc();
+}
+
+inverseButton.onclick = function()
+{
+  if (a.m == a.n && a.det() != 0)
+  {
+    calcMatrixBorder.style.display = "block";
+    calcMatrixTable.style.display = "inline-block";
+    calculatorOutput.style.display = "none";
+    calcMatrixTable.style.borderColor = "black";
+
+    var inverseMatrix = a.inverse();
+
+    displayMatrix(calcMatrixTable, inverseMatrix);
+    styleMatrixBorder(calcMatrixTable, calcMatrixBorder);
+    resizeCalc();
+  }
+  else
+  {
+    calcMatrixBorder.style.display = "none";
+    calcMatrixTable.style.display = "none";
+    calculatorOutput.style.display = "block";
+    calculatorOutput.innerHTML = "Matrix is not invertible"
+  }
 }
 
 submitMatrixSize();
