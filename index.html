@@ -8,28 +8,31 @@
     <div id="main">
       <div id="topSection">
         <div id="leftSection">
-          <span>Enter matrix size:</span>
-          <br>
-          <br>
+          <div id="inputSizeSection">
+            <span>Enter matrix size:</span>
+            <br>
+            <br>
 
-          <label>m:</label>
-          <input id="mInput" type="number" min="1" max="10" value="2"></input>
-          <span id="x">  x  </span>
-          <label>n:</label>
-          <input id="nInput" type="number" min="1" max="10" value="3"></input>
-          <br>
-          <br>
+            <label>m:</label>
+            <input id="mInput" type="number" min="1" max="10" value="2"></input>
+            <span id="x" style="font-size: 83%">  x  </span>
+            <label>n:</label>
+            <input id="nInput" type="number" min="1" max="10" value="3"></input>
+            <br>
+            <br>
+          </div>
 
           <table id="matrixInput"></table>
 
           <br>
-          <div id="setMatrixButton" class="button" onclick="createMatrix()">Set Matrix!</div>
+          <div id="setMatrixButton" class="button" onclick="createMatrix()">Set Matrix</div>
         </div>
 
         <table id="rightSection">
           <tr>
             <td id="matrixTableSection">
-              <table id="matrixTable" class="center" style="display: inline-block"></table>
+              <div class="matrixInnerBorder" id="matrixBorder"></div>
+              <table id="matrixTable" class="center"></table>
             </td>
           </tr>
           <tr>
@@ -94,24 +97,41 @@
             </tr>
 
             <tr>
-              <td id="clearButton" class="center button" onclick="clearOpLog()">Clear</td>
+              <td id="clearButton" class="center button">Clear</td>
             </tr>
           </table>
         </div>
 
-        <!-- add later:
         <div id="calculatorContainer">
           <table id="calculator">
             <tr>
-              <td id="calculatorHeader" class="bottomBorder" class="left">Calculator</td>
+              <td id="calculatorHeader" class="bottomBorder" class="left" colspan="2">Calculator</td>
             </tr>
 
             <tr>
+              <td id="calculatorButtonsContainer">
+                <table id="calculatorButtons">
+                  <tr>
+                    <td class="center button" id="detButton">det A</td>
+                    <td class="center button" id="rrefButton">RREF(A)</td>
+                  </tr>
 
+                  <tr>
+                    <td class="center button" id="transposeButton">Aᵀ</td>
+                    <td class="center button" id="inverseButton">A⁻¹</td>
+                  </tr>
+                </table>
+              </td>
+
+              <td class="center">
+                <div class="matrixInnerBorder" id="calcMatrixBorder"></div>
+                <table class="center" id="calcMatrixTable"></table>
+                <div class="center" id="calculatorOutput"></div>
+              </td>
             </tr>
           </table>
         </div>
-      -->
+
       </div>
 
     </div>
